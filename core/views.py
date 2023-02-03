@@ -5,13 +5,12 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Q
-
+from rest_framework import viewsets
 
 from core.models import Room, Reservation
 from .serializers import ReservationSerializer, RoomSerializer
 
 
-from rest_framework import viewsets
 
 
 class RoomsView(View):

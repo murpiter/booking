@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Reservation, Room, User
+from .models import Reservation, Room
 
 
 class ReservationSerializer(serializers.ModelSerializer):
