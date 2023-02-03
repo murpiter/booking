@@ -8,7 +8,7 @@ from django.db.models import Q
 
 
 from core.models import Room, Reservation
-from .serializers import ReservationSerializer, RoomSerializer, UserSerializer
+from .serializers import ReservationSerializer, RoomSerializer
 
 
 from rest_framework import viewsets
@@ -135,8 +135,3 @@ class ReservationViewSet(viewsets.ModelViewSet):
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer

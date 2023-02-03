@@ -10,7 +10,6 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'room', views.RoomViewSet)
 router.register(r'reservation', views.ReservationViewSet)
-router.register(r'user', views.UserViewSet)
 
 
 urlpatterns = [
