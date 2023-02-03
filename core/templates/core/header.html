@@ -1,0 +1,27 @@
+<div class="h-20 my-0 mx-auto w-2/3 flex flex-row justify-between">
+    <div class="flex items-center">
+        <a class="text-2xl font-bold text-white" href="{% url 'rooms' %}">
+            Список комнат
+        </a>
+    </div>
+    <div class="flex flex-row justify-end items-center gap-5">
+        {% with user_authenticated=request.user.is_authenticated %}
+            {% if user_authenticated %}
+                <a class="flex flex-row text-white" href="{% url 'reservations' %}">
+                    Мои букинги
+                </a>
+                <a class="flex flex-row text-white" href="{% url 'logout' %}">
+                    Выйти
+                </a>
+
+            {% else %}
+                <a class="flex flex-row text-white" href="{% url 'authorize' %}">
+                    Войти
+                </a>
+                <a class="flex flex-row text-white" href="{% url 'register' %}">
+                    Зарегистрироваться
+                </a>
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>

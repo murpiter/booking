@@ -1,0 +1,29 @@
+{% extends 'core/base_with_header.html' %}
+
+{% block content %}
+<body>
+    <form class="ml-10" method="post">
+        {% csrf_token %}
+        <div class="flex flex-col justify-between m-2">
+            <div>
+                <input name="date_start" class="border-solid border-2 bg-white rounded p-2
+                hover:bg-teal-800 text-black w-40 mt-8" type="date" value="date_start"
+            >
+            </div>
+            <div>
+                <input name="date_end" class="border-solid border-2 bg-white rounded p-2
+                hover:bg-teal-800 text-black w-40 mt-8" type="date" value="date_end"
+                >
+            </div>
+        </div>
+        <button class="border-solid border-2 bg-teal-900 rounded p-2
+                       hover:bg-teal-800 text-white w-40 mt-8" type="submit">
+            Забронировать
+        </button>
+    </form>
+    <div class="mb-5 mt-5 ml-10 border-solid border-2 rounded p-2">
+        <div>Комната {{ room.number }}</div>
+        <div>Размер {{ room.capacity }}</div>
+        <div>Цена {{ room.price }}</div>
+    </div>
+{% endblock %}

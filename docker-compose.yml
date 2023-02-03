@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: 'room_reservation'
+    environment:
+      POSTGRES_DB: room_reservation
+      POSTGRES_USER: room_reservation
+      POSTGRES_PASSWORD: room_reservation
+    ports:
+      - "5777:5432"

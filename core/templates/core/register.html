@@ -1,0 +1,22 @@
+{% extends 'core/base_with_header.html' %}
+
+{% block content %}
+<div class="flex flex-col">
+    <div>
+        <h1>Регистрация</h1>
+    </div>
+    <form class="" method="post">
+        <div class="flex flex-col">
+            {% csrf_token %}
+            <div><input type="text" name="username" placeholder="Юзернейм"></div>
+            <div><input type="text" name="email" placeholder="Емейл"></div>
+            <div><input type="password" name="password" placeholder="Пароль"></div>
+            <div><input type="password" name="password_again" placeholder="Повторите пароль"></div>
+            <div><button class="basic_button" type="submit">Зарегистрироваться</button></div>
+        </div>
+    </form>
+    <div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'core/base_with_header.html' %}
+
+{% block content %}
+    <div class="flex flex-row">
+        <div class="mr-10">
+            <form class="inline-block inline-flex items-center bg-white shadow-md rounded
+                         px-8 pt-6 pb-8 mb-4 border flex flex-col" method="GET">
+                <select class="inline-block inline-flex items-center bg-white shadow-md rounded
+                               px-8 pt-6 pb-8 mb-4 border flex flex-col" name="sort" id="sort">
+                  <option value="price">Сначала самые дешевые</option>
+                  <option value="-price">Сначала самые дорогие</option>
+                  <option value="capacity">Сначала маленькие</option>
+                  <option value="-capacity">Сначала большие</option>
+                </select>
+
+                <div class="flex flex-col justify-between m-2">
+                    <div>
+                        <input class="border-solid border-2 bg-teal-900 rounded p-2
+                                      hover:bg-teal-800 text-white w-40 mt-8"
+                               type="submit"
+                               value="Выбрать"
+                        >
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-between m-2">
+                    <div>
+                        <input name="date_start" class="border-solid border-2 bg-white rounded p-2
+                        hover:bg-teal-800 text-black w-40 mt-8" type="date" value="date_start"
+                    >
+                    </div>
+                    <div>
+                        <input name="date_end" class="border-solid border-2 bg-white rounded p-2
+                        hover:bg-teal-800 text-black w-40 mt-8" type="date" value="date_end"
+                        >
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div>
+            <div class="flex flex-col ml-10">
+                {% for room in rooms %}
+                    <div class="mb-5">
+
+                        <a class="" href="{% url 'room' room.id %}">
+                            <div class="border-solid border-2 bg-white rounded p-2
+                                        hover:bg-teal-800 text-black w-40 mt-8 mb-5">
+                                Комната {{ room.number }}
+                            </div>
+                        </a>
+
+                        <div>Размер {{ room.capacity }}</div>
+                        <div>Цена {{ room.price }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
