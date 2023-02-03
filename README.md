@@ -17,3 +17,9 @@ docker-compose up
 python manage.py migrate
 python manage.py runserver
 ```
+
+## Будет вскоре добавлено
+`tox` в котором будут
+- `isort`
+- `black`
+- `pytest`
