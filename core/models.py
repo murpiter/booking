@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Room(models.Model):
-    price = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     capacity = models.IntegerField()
     number = models.IntegerField(unique=True)
 
