@@ -1,14 +1,8 @@
-from django.urls import path, include
+from django.urls import path
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 
 from . import views
-from rest_framework import routers
-
-
-router = routers.DefaultRouter()
-router.register(r'room', views.RoomViewSet)
-router.register(r'reservation', views.ReservationViewSet)
 
 
 urlpatterns = [
@@ -17,6 +11,12 @@ urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('room/<int:room_id>/', views.RoomDetailView.as_view(), name='room'),
     path('user_reservations/', views.UserReservationsView.as_view(), name='reservations'),
-    path('api/', include(router.urls)),
     path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
+
+    path('api/rooms/', views.RoomListAPIView.as_view(), name='api_rooms'),
+    path('api/rooms/<int:pk>', views.RoomDetailAPIView.as_view(), name='api_rooms_detail'),
+    path('api/reservations/', views.ReservationListAPIView.as_view(), name='api_reservations'),
+    path('api/reservations/create/', views.ReservationCreateAPIView.as_view(), name='api_reservations_create'),
+    path('api/reservations/<int:pk>/delete/', views.ReservationDeleteAPIView.as_view(), name='api_reservations_delete'),
+    path('api/user/register/', views.UserRegisterAPIView.as_view(), name='api_user_register'),
 ]

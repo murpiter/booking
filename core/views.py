@@ -5,12 +5,61 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Q
-from rest_framework import viewsets
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 from core.models import Room, Reservation
-from .serializers import ReservationSerializer, RoomSerializer
+from core.serializers import (
+    RoomListSerializer,
+    RoomDetailSerializer,
+    ReservationListSerializer,
+    ReservationCreateSerializer,
+    ReservationDeleteSerializer,
+    UserRegistrationSerializer,
+)
 
 
+class RoomListAPIView(generics.ListAPIView):
+    queryset = Room.objects.all()
+
+    serializer_class = RoomListSerializer
+
+
+class RoomDetailAPIView(generics.RetrieveAPIView):
+    queryset = Room.objects.all()
+
+    serializer_class = RoomDetailSerializer
+
+
+class ReservationListAPIView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Reservation.objects.all()
+
+    serializer_class = ReservationListSerializer
+
+
+class ReservationCreateAPIView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Reservation.objects.all()
+
+    serializer_class = ReservationCreateSerializer
+
+
+class ReservationDeleteAPIView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Reservation.objects.all()
+
+    serializer_class = ReservationDeleteSerializer
+
+
+class UserRegisterAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+
+    serializer_class = UserRegistrationSerializer
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        login(self.request, user)
 
 
 class RoomsView(View):
@@ -124,13 +173,3 @@ class UserReservationsView(LoginRequiredMixin, View):
 
         else:
             return redirect('rooms')
-
-
-class ReservationViewSet(viewsets.ModelViewSet):
-    queryset = Reservation.objects.all()
-    serializer_class = ReservationSerializer
-
-
-class RoomViewSet(viewsets.ModelViewSet):
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
