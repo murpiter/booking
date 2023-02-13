@@ -1,20 +1,37 @@
 from django.contrib.auth.models import User
 
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
+
 from .models import Reservation, Room
 
 
-class UserRegistrationSerializer(serializers.ModelSerializer):
+class UserRegistrationRequestSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
 
     def create(self, validated_data):
-        return User.objects.create_user(
+        user = User.objects.create_user(
             validated_data['username'],
             validated_data['email'],
             validated_data['password'],
         )
+
+        Token.objects.create(user=user)
+
+        return user
+
+
+class UserRegistrationResponseSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(source='auth_token.key')
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'token']
+
 
 
 class UserAuthorizationSerializer(serializers.ModelSerializer):
@@ -44,7 +61,7 @@ class ReservationCreateSerializer(serializers.ModelSerializer):
 
 
 class ReservationListSerializer(serializers.ModelSerializer):
-    room = RoomListSerializer(read_only=True)
+    room = RoomListSerializer()
 
     class Meta:
         model = Reservation

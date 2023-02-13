@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
+from rest_framework.authtoken.views import obtain_auth_token
 
 from . import views
 
@@ -19,4 +20,5 @@ urlpatterns = [
     path('api/reservations/create/', views.ReservationCreateAPIView.as_view(), name='api_reservations_create'),
     path('api/reservations/<int:pk>/delete/', views.ReservationDeleteAPIView.as_view(), name='api_reservations_delete'),
     path('api/user/register/', views.UserRegisterAPIView.as_view(), name='api_user_register'),
+    path('api/user/obtain_token/', obtain_auth_token, name='api_obtain_token'),
 ]
