@@ -45,8 +45,10 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## Будет вскоре добавлено
-`tox` в котором будут
-- `isort`
-- `black`
-- `pytest`
+## Линтеры
+В данный момент `isort` и `black`.
+
+Запускать так:
+```bash
+tox
+```

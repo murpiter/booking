@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
@@ -11,13 +10,13 @@ class UserRegistrationRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ["username", "email", "password"]
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            validated_data['username'],
-            validated_data['email'],
-            validated_data['password'],
+            validated_data["username"],
+            validated_data["email"],
+            validated_data["password"],
         )
 
         Token.objects.create(user=user)
@@ -26,30 +25,29 @@ class UserRegistrationRequestSerializer(serializers.ModelSerializer):
 
 
 class UserRegistrationResponseSerializer(serializers.ModelSerializer):
-    token = serializers.CharField(source='auth_token.key')
+    token = serializers.CharField(source="auth_token.key")
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'token']
-
+        fields = ["username", "email", "token"]
 
 
 class UserAuthorizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ["username", "password"]
 
 
 class RoomListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ['id', 'capacity', 'price', 'number']
+        fields = ["id", "capacity", "price", "number"]
 
 
 class RoomDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ['id', 'capacity', 'price', 'number']
+        fields = ["id", "capacity", "price", "number"]
 
 
 class ReservationCreateSerializer(serializers.ModelSerializer):
@@ -57,7 +55,7 @@ class ReservationCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reservation
-        fields = ['room', 'date_start', 'date_end', 'user']
+        fields = ["room", "date_start", "date_end", "user"]
 
 
 class ReservationListSerializer(serializers.ModelSerializer):
@@ -65,10 +63,10 @@ class ReservationListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reservation
-        fields = ['id', 'date_start', 'date_end', 'room']
+        fields = ["id", "date_start", "date_end", "room"]
 
 
 class ReservationDeleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
-        fields = ['id']
+        fields = ["id"]
