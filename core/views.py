@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, generics, status
+from rest_framework import filters, generics, mixins, status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -38,30 +38,29 @@ class RoomDetailAPIView(generics.RetrieveAPIView):
     serializer_class = RoomDetailSerializer
 
 
-class ReservationListAPIView(generics.ListAPIView):
+class ReservationViewSet(
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
     permission_classes = [IsAuthenticated]
     queryset = Reservation.objects.filter(is_deleted=False)
-
-    serializer_class = ReservationListSerializer
-
-
-class ReservationCreateAPIView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Reservation.objects.all()
-
-    serializer_class = ReservationCreateSerializer
-
-
-class ReservationDeleteAPIView(generics.DestroyAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Reservation.objects.all()
-
-    serializer_class = ReservationDeleteSerializer
 
     def perform_destroy(self, instance):
         instance.is_deleted = True
 
         instance.save()
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return ReservationListSerializer
+        elif self.request.method == "POST":
+            return ReservationCreateSerializer
+        elif self.request.method == "DELETE":
+            return ReservationDeleteSerializer
+
+        raise NotImplementedError()
 
 
 class UserRegisterAPIView(generics.CreateAPIView):

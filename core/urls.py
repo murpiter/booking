@@ -1,30 +1,15 @@
-from django.conf import settings
-from django.contrib.auth.views import LogoutView
 from django.urls import path
+from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 
 from . import views
 
+router = routers.DefaultRouter()
+router.register(r"reservations", views.ReservationViewSet)
+
 urlpatterns = [
     path("rooms/", views.RoomListAPIView.as_view(), name="api_rooms"),
-    path(
-        "rooms/<int:pk>", views.RoomDetailAPIView.as_view(), name="api_rooms_detail"
-    ),
-    path(
-        "reservations/",
-        views.ReservationListAPIView.as_view(),
-        name="api_reservations",
-    ),
-    path(
-        "reservations/create/",
-        views.ReservationCreateAPIView.as_view(),
-        name="api_reservations_create",
-    ),
-    path(
-        "reservations/<int:pk>/delete/",
-        views.ReservationDeleteAPIView.as_view(),
-        name="api_reservations_delete",
-    ),
+    path("rooms/<int:pk>", views.RoomDetailAPIView.as_view(), name="api_rooms_detail"),
     path(
         "user/register/",
         views.UserRegisterAPIView.as_view(),

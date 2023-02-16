@@ -2,7 +2,7 @@ from django.db.models import Q
 from django_filters.rest_framework import FilterSet, NumberFilter
 from rest_framework import filters
 
-from .models import Room, Reservation
+from .models import Reservation, Room
 
 
 class IsAvailableFilterBackend(filters.BaseFilterBackend):
