@@ -16,6 +16,7 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_start = models.DateField()
     date_end = models.DateField()
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.room.number)
