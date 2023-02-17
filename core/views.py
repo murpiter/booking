@@ -4,7 +4,7 @@ from rest_framework import filters, generics, mixins, status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from core.filters import IsAvailableFilterBackend, RoomFilter
+from core.filters import RoomFilter
 from core.models import Reservation, Room
 from core.serializers import (
     ReservationCreateSerializer,
@@ -24,10 +24,11 @@ class RoomListAPIView(generics.ListAPIView):
 
     filter_backends = [
         filters.OrderingFilter,
-        IsAvailableFilterBackend,
         DjangoFilterBackend,
     ]
+
     filterset_class = RoomFilter
+
     ordering_fields = ["price", "capacity"]
     ordering = ["price"]
 
